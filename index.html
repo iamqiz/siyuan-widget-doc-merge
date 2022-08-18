@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Counter</title>
+    <style type="text/css">
+
+        @import"./index.css";
+
+    </style>
+</head>
+
+<body>
+<script src="static/jquery.min.js"></script>
+
+
+<h2>思源页面合并助手</h2>
+<p>使用方法: 输入文档ID -> 检查 -> 合并</p>
+文档1 ID: <input type="text"  placeholder="文档1的ID" id="doc1_id_input" value="20220415190432-r3xqn3r" size="40"><br>
+文档2 ID: <input type="text"  placeholder="文档2的ID" id="doc2_id_input" value="20200825162036-4dx365o" size="50"><br>
+    <button id="check_doc_info_btn">步骤1:点击检查文档</button>
+    <table>
+        <tr>
+            <td id="doc1_info_head">文档1:</td>
+            <td><div id="doc1_info"></div></td>
+        </tr>
+        <tr>
+            <td id="doc2_info_head">文档2:</td>
+            <td><div id="doc2_info"></div></td>
+        </tr>
+    </table>
+    <br>
+    <button id="begin_merge_btn">
+        步骤2:开始合并
+    </button>
+
+<!--    <a href="https://www.baidu.com" target="_blank" id="new_version_url"></a>-->
+<!--    <a target="_blank" id="new_version_url"></a>-->
+    <a href="" target="_blank" id="new_version_url"></a>
+    <!--    信息表-->
+    <table>
+
+        <tr>
+            <td id="process_msg_head">当前状态:</td>
+            <td><div id="process_msg"></div></td>
+        </tr>
+<!--
+        <tr>
+            <td id="merged_doc_id_head">合并结果ID</td>
+            <td><div id="merged_doc_id"></div></td>
+        </tr>
+-->
+        <tr>
+            <td id="merged_doc_hpath_head">合并结果路径:</td>
+            <td><a id="merged_doc_hpath" target="_blank"></a></td>
+        </tr>
+
+    </table>
+    <button id="delete_last_merged_doc_btn">
+        删除上次合并后的文档
+    </button>
+
+    <script src="script/count1.js" type="module"></script>
+    </body>
+
+</html>
