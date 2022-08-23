@@ -62,9 +62,134 @@ export {
     刷新文档树 as refreshFiletree,
     以id获取完整人类可读路径 as getFullHPathByID,
     获取块信息 as getBlockInfo,
+    getRefIDs,
+    getBlockDOM,
+    getDocInfo,createBacklink,
 };
 
+
+// 创建反链
+// 	defID := arg["defID"].(string)
+// 	refID := arg["refID"].(string)
+// 	refText := arg["refText"].(string)
+// 	isDynamic := arg["isDynamic"].(bool)
+async function createBacklink(defID,refID,refText,isDynamic) {
+    let data = {
+        defID:defID,
+        refID:refID,
+        refText:refText,
+        isDynamic:isDynamic
+    }
+    let url = '/api/ref/createBacklink'
+    // return 解析响应体(向思源请求数据(url, data))
+    return 向思源请求数据(url, data)
+}
+//获取文档信息
+async function getDocInfo(docId) {
+    let data = {
+        id:docId
+    }
+    let url = '/api/block/getDocInfo'
+    return 解析响应体(向思源请求数据(url, data))
+    // return 向思源请求数据(url, data)
+}
+
+async function getBlockDOM(blockid) {
+    let data = {
+        id:blockid
+    }
+    let url = '/api/block/getBlockDOM'
+    // return 解析响应体(向思源请求数据(url, data))
+    return 向思源请求数据(url, data)
+}
+
+/**
+ *
+ *     if (response.status === 200)
+ *         return await response.json();
+ *     else return null;
+ *
+ *     response.text().then(function(text) {
+ *     return text ? JSON.parse(text) : {}
+ *   })
+ */
+async function 向思源请求数据1(url, data) {
+    let resData = null
+    await fetch(url, {
+        body: JSON.stringify(data),
+        method: 'POST',
+        headers: {
+            Authorization: `Token ${config.token}`,
+        }
+    }).then(function (response) {
+        // console.info(`向思源请求数据(${url}) ${response}`)
+        // console.info(`向思源请求数据(${url}) ${JSON.stringify(response)}`)
+        // @获取 response的状态码,200表示正常
+        // console.info(`向思源请求数据(${url})status: ${response.status}`)
+        // resData = response.json()  //
+        // resData = response.text()  //
+        // console.log("resData:"+resData)
+        // return  resData
+        // response.text()
+        // return response.text().then(function(text) {
+         // return text ? JSON.parse(text) : "的点点滴滴"
+         // return text ? "发生过" : "的点点滴滴"
+        // })
+        if (response.ok) {
+            resData = response.json()
+        }else {
+            // return Promise.reject('something went wrong!')
+            // return Promise.reject(response.statusText)
+            // let error_msg=response.status+" "+response.statusText
+            let error_msg=`(${url})${response.status} ${response.statusText}`
+            throw "gggggggggggg1"
+
+            // return Promise.reject(error_msg)
+            // return null;
+        }
+        /*
+        resData= response.text().then(function(text) {
+            // console.log("text:"+text)
+            // console.log("text type:"+(typeof text)) //string
+         // return text ? JSON.parse(text) : "的点点滴滴"
+         return text ? JSON.parse(text) : null
+         //    return text ? "发生过" : "的点点滴滴"
+        })
+        */
+    })
+    // .catch(function (reason) {
+    //     console.error("错误:"+reason)
+    //     //如果在catch里再throw,程序会停止
+    //     // throw "ffffffffffffff"
+    // })
+    return resData
+    // return "分割"
+}
+
+//
 async function 向思源请求数据(url, data) {
+    let resData = null
+    await fetch(url, {
+        body: JSON.stringify(data),
+        method: 'POST',
+        headers: {
+            Authorization: `Token ${config.token}`,
+        }
+    }).then(function (response) {
+        if(response.ok){
+             resData = response.json()
+            // return resData = response.json()
+            // return response.json()
+            return
+        }
+        let error_msg=`API错误:(${url})${response.status} ${response.statusText}`
+        console.error(error_msg)
+    })
+    return resData
+}
+
+// 原始
+async function 向思源请求数据0(url, data) {
     let resData = null
     await fetch(url, {
         body: JSON.stringify(data),
@@ -77,9 +202,11 @@ async function 向思源请求数据(url, data) {
 }
 
 async function 解析响应体(response) {
-    let r = await response
+    let r = await response       //
     // console.log(r)
-    return r.code === 0 ? r.data : null
+    //r 可能是个null
+    // return r.code === 0 ? r.data : null
+    return r && r.code === 0 ? r.data : null
 }
 
 //----------qz add
@@ -135,11 +262,14 @@ async function 获取系统版本() {
 
 
 //这个api直接返回文件内容,没有封装到data键里
+//返回的是object ,不是字符串
+//path示例: /data/20210808180117-6v0mkxr/20200923234011-ieuun1p.sy
+//如果path不存在,会报post 404错误
 async function 获取文件内容(path) {
+    let url = '/api/file/getFile'
     let data = {
         path:path,
     }
-    let url = '/api/file/getFile'
     // return 解析响应体(向思源请求数据(url, data))
     return 向思源请求数据(url, data)
 }
@@ -156,7 +286,14 @@ async function 写入文件(path,isDir,modTime,file) {
     return 向思源请求数据(url, data)
 }
 
-
+async function getRefIDs(id) {
+    let data = {
+        id:id,
+    }
+    let url = '/api/block/getRefIDs'
+    return 解析响应体(向思源请求数据(url, data))
+    // return 向思源请求数据(url, data)
+}
 
 async function 克隆文档(id) {
     let data = {
@@ -199,7 +336,7 @@ async function 获取块信息(块id) {
     // return 向思源请求数据(url, data)
 }
 
-//----------- add end
+//-----------qz add end
 
 async function 以sql向思源请求块数据(sql) {
     let sqldata = {
@@ -494,6 +631,17 @@ async function 以关键词搜索模板(k) {
     return 解析响应体(向思源请求数据(url, data))
 }
 
+
+async function createDoc(notebook, path,title ,md) {
+    let data = {
+        notebook: notebook,
+        path: path,
+        title: title,
+        md:md
+    }
+    let url = '/api/filetree/createDoc'
+    return 解析响应体(向思源请求数据(url, data))
+}
 //https://github.com/siyuan-note/siyuan/blob/master/API_zh_CN.md#%E9%80%9A%E8%BF%87-markdown-%E5%88%9B%E5%BB%BA%E6%96%87%E6%A1%A3
 //注:如果创建的新文档已经存在,则添加形如"-ng4bkui"的后缀
 //这里path 是hpath
@@ -520,14 +668,14 @@ async function 渲染模板0(data) {
     return 解析响应体(向思源请求数据(url, data))
 }
 
-async function 插入块(previousID, dataType, data) {
+async function 插入块(previousID, data,dataType="markdown") {
     let url = '/api/block/insertBlock'
     return 解析响应体(向思源请求数据(
         url = url,
         data = {
             previousID: previousID,
-            dataType: dataType,
             data: data,
+            dataType: dataType,
         },
     ))
 }
@@ -557,7 +705,20 @@ async function 插入后置子块(parentID, dataType, data) {
     ))
 }
 
-async function 更新块(id, dataType, data) {
+//更新块
+//dataType：待更新数据类型，值可选择 markdown 或者 dom
+async function 更新块(blockId, dataType, newData) {
+    let data = {
+        id: blockId,
+        dataType: dataType,
+        data: newData,
+    }
+    let url = '/api/block/updateBlock'
+    // return 解析响应体(向思源请求数据(url, data))
+    return 向思源请求数据(url, data)
+}
+
+async function 更新块0(id, dataType, data) {
     let url = '/api/block/updateBlock'
     return 解析响应体(向思源请求数据(
         url = url,

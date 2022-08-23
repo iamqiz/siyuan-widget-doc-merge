@@ -16,12 +16,19 @@
 <body>
 <script src="static/jquery.min.js"></script>
 
+<template id="template_ele">
+</template>
 
-<h2>思源页面合并助手</h2>
-<p>使用方法: 输入文档ID -> 检查 -> 合并</p>
-文档1 ID: <input type="text"  placeholder="文档1的ID" id="doc1_id_input" value="20220415190432-r3xqn3r" size="40"><br>
-文档2 ID: <input type="text"  placeholder="文档2的ID" id="doc2_id_input" value="20200825162036-4dx365o" size="50"><br>
-    <button id="check_doc_info_btn">步骤1:点击检查文档</button>
+<h3>思源页面合并助手-beta</h3>
+<p><b>使用方法</b>>: 输入文档ID -> 检查 -> 合并</p>
+<p>文档2的内容会被合并到文档1尾部<br>
+    文档2的反链会指向文档1
+</p>
+
+文档1 ID: <input type="text"  placeholder="文档1的ID" id="doc1_id_input" value="20200813004931-q4cu8na" size="40"><br>
+文档2 ID: <input type="text"  placeholder="文档2的ID" id="doc2_id_input" value="20200813013559-sgbzl5k" size="50"><br>
+<button id="check_doc_info_btn">步骤1:点击检查文档</button>
+(如果出错,请按F12或ctrl+shift+I查看详细错误信息)
     <table>
         <tr>
             <td id="doc1_info_head">文档1:</td>
@@ -59,10 +66,11 @@
         </tr>
 
     </table>
-    <button id="delete_last_merged_doc_btn">
+<!--    <button id="delete_last_merged_doc_btn">
         删除上次合并后的文档
-    </button>
+    </button>-->
 
+<!--    <script src="script/count.js" type="module"></script>-->
     <script src="script/count1.js" type="module"></script>
     </body>
 
