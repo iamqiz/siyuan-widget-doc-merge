@@ -141,8 +141,19 @@ async function insert_after_widget_block(dataArg) {
 	lastNewCreatedBlockID=newBlockId
 	return newBlockId
 }
+//刷新文档树,重建索引
+async function refreshFileTreeBtnMain(){
+	console.log("重建索引....")
+	msg_bar.innerHTML="重建索引中....."
+	await refreshFiletree()
+	msg_bar.innerHTML="重建索引完成,合并结束"
 
+}
+document.getElementById('refreshFileTreeBtn').addEventListener('click', function () {
 
+	refreshFileTreeBtnMain().then(r => {});   //主
+
+});
 
 
 document.getElementById('begin_merge_btn').addEventListener('click', function () {
@@ -200,9 +211,13 @@ async function merge_no_changeId_main(){
 
 	await test_change_dom_target1(doc2id,doc1id)
 	await merge_no_change_id(doc1id,doc2id)
-	console.log("刷新文件树:")
-	await delayMs(2000)
-	await api.refreshFiletree()
+	msg_bar.innerHTML="即将完成,请点击按钮3重建索引"
+
+	// console.log("刷新文件树:")
+	// msg_bar.innerHTML="准备重建索引..."
+	// await delayMs(2000)
+	// await api.refreshFiletree()
+	// msg_bar.innerHTML="合并完成"
 	// await api.refreshFiletree()
 	// 获取文档2的引用,去重,遍历引用块 修改引用目标指向文档1
 	// 删除文档1和2
@@ -396,7 +411,6 @@ console.log("newDocId:"+newDocId)
 }
 async function merge_no_change_id(doc1idArg,doc2idArg) {
 	// let msg_bar = document.getElementById('process_msg');
-	document.getElementById("merged_doc_hpath").innerHTML=""
 	let doc1id;
 	let doc2id;
 	console.log("开始merge_no_change_id")
