@@ -1,4 +1,6 @@
 /* 思源 API 调用
+   修改自 [weihan-Chen/WordCounter](https://github.com/weihan-Chen/WordCounter/blob/master/script/api.js)
+   原始引用信息:
    REF [cc-baselib/siYuanApi.js at main · leolee9086/cc-baselib](https://github.com/leolee9086/cc-baselib/blob/main/src/siYuanApi.js)
  */
 
