@@ -154,7 +154,45 @@ document.getElementById('refreshFileTreeBtn').addEventListener('click', function
 	refreshFileTreeBtnMain().then(r => {});   //主
 
 });
+async function pasteClipboardContentToInput(whichBtn) {
+	console.clear()
+	console.log("点击的是按钮:"+whichBtn)
+	let msg_ele=document.getElementById("clipMsg"+whichBtn)
+	let target_input_ele=document.getElementById(`doc${whichBtn}_id_input`)
+	msg_ele.innerHTML=""
 
+	// await delayMs(1000)
+	// msg_ele.innerHTML=""
+	navigator.clipboard
+		.readText()
+		.then((clipText) => {
+			let text
+			text = clipText.trim()
+			console.log("获取剪贴板成功:", clipText);
+			if (text.length > 25) {
+				console.log("剪贴板内容过长:" + text.substring(0, 25))
+				msg_ele.innerHTML="剪贴板内容过长"
+			} else {
+				console.log("剪贴板内容为:" + text)
+				target_input_ele.value=text
+				msg_ele.innerHTML="粘贴成功"
+			}
+		})
+		.catch((v) => {
+			console.log("获取剪贴板失败: ", v);
+		});
+	//1秒之后消失
+	// await delayMs(1000)
+	// msg_ele.innerHTML=""
+}
+
+//粘贴自剪贴板按钮事件,2个
+document.getElementById('pasteFromClipboardBtn1').addEventListener('click', function () {
+	pasteClipboardContentToInput(1).then(r => {});
+});
+document.getElementById('pasteFromClipboardBtn2').addEventListener('click', function () {
+	pasteClipboardContentToInput(2).then(r => {});
+});
 
 document.getElementById('begin_merge_btn').addEventListener('click', function () {
 	console.clear()
