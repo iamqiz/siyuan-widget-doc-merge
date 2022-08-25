@@ -101,8 +101,8 @@ async function getBlockDOM(blockid) {
         id:blockid
     }
     let url = '/api/block/getBlockDOM'
-    // return 解析响应体(向思源请求数据(url, data))
-    return 向思源请求数据(url, data)
+    return 解析响应体(向思源请求数据(url, data))
+    // return 向思源请求数据(url, data)
 }
 
 /**

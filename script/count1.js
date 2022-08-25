@@ -561,12 +561,12 @@ async function changeBlockDefID(blockIdArg,oriDocId, newDocId,refNewText) {
 	// console.log("getBlockDOM ret.data:"+JSON.stringify(newVar.data))
 	// console.log("getBlockDOM ret.data-type:"+(typeof newVar.data))
 
-	console.log("dom:" + newVar.data.dom)
-	console.log("dom-type:" + (typeof newVar.data.dom))  //是字符串
+	console.log("dom:" + newVar.dom)
+	console.log("dom-type:" + (typeof newVar.dom))  //是字符串
 	// console.log("dom1:"+newVar.data.dom.getAttribute("data-type"))
 	// console.log("dom1:"+newVar.data.dom.getAttribute("data-type"))
 	// console.log("dom1:"+newVar.data.dom.data-type)
-	let element = await htmlToElement(newVar.data.dom);
+	let element = htmlToElement(newVar.dom);
 	console.log("element ret outerHTML:" + element.outerHTML)
 	console.log("element ret innerHTML:" + element.innerHTML)
 	console.log("element-str:" + JSON.stringify(element))
@@ -638,7 +638,7 @@ async function changeBlockDefID(blockIdArg,oriDocId, newDocId,refNewText) {
 		}
 	}
 }
-async function htmlToElement(html) {
+function htmlToElement(html) {
 	// let template = document.createElement('template');
 	// let template = document.createElement('template');
 	// let template = window.parent.document.createElement('template');
