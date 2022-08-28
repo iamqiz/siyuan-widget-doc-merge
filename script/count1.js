@@ -149,11 +149,11 @@ async function refreshFileTreeBtnMain(){
 	msg_bar.innerHTML="重建索引完成,合并结束"
 
 }
-document.getElementById('refreshFileTreeBtn').addEventListener('click', function () {
-
-	refreshFileTreeBtnMain().then(r => {});   //主
-
-});
+// document.getElementById('refreshFileTreeBtn').addEventListener('click', function () {
+//
+// 	refreshFileTreeBtnMain().then(r => {});   //主
+//
+// });
 async function pasteClipboardContentToInput(whichBtn) {
 	console.clear()
 	console.log("点击的是按钮:"+whichBtn)
@@ -249,7 +249,7 @@ async function merge_no_changeId_main(){
 
 	await test_change_dom_target1(doc2id,doc1id)
 	await merge_no_change_id(doc1id,doc2id)
-	msg_bar.innerHTML="即将完成,请点击按钮3重建索引"
+	// msg_bar.innerHTML="即将完成,请点击按钮3重建索引"
 
 	// console.log("刷新文件树:")
 	// msg_bar.innerHTML="准备重建索引..."
@@ -510,6 +510,17 @@ async function merge_no_change_id(doc1idArg,doc2idArg) {
 
 					msg_bar.innerHTML="合并完成"
 
+			}
+			if (1) {
+				// await delayMs(2000, "开始重建单个文件索引")
+				msg_bar.innerHTML="重建单个文件索引"
+
+				console.log("重建单文件索引 "+util.curtime())
+				let doc1syPath = "/data/"+doc1info.box+doc1info.path;
+				await api.reindexTree(doc1syPath)
+				console.log("重建单文件索引 over "+util.curtime())
+				msg_bar.innerHTML="单个文件索引 over"
+				msg_bar.innerHTML="合并完成"
 			}
 
 		}

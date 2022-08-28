@@ -66,9 +66,19 @@ export {
     获取块信息 as getBlockInfo,
     getRefIDs,
     getBlockDOM,
-    getDocInfo,createBacklink,
+    getDocInfo,createBacklink,reindexTree,
 };
 
+//重建单个文档索引, putfile之后使用
+//path示例 /data/x/y.sy
+async function reindexTree(path) {
+    let url = '/api/filetree/reindexTree'
+    let data = {
+        path:path
+    }
+    return 解析响应体(向思源请求数据(url, data))
+    // return 向思源请求数据(url, data)
+}
 
 // 创建反链
 // 	defID := arg["defID"].(string)
