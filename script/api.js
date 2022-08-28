@@ -720,24 +720,11 @@ async function 更新块(blockId, dataType, newData) {
     return 向思源请求数据(url, data)
 }
 
-async function 更新块0(id, dataType, data) {
-    let url = '/api/block/updateBlock'
-    return 解析响应体(向思源请求数据(
-        url = url,
-        data = {
-            id: id,
-            dataType: dataType,
-            data: data,
-        },
-    ))
-}
 
-async function 删除块(id) {
+async function 删除块(blockId) {
     let url = '/api/block/deleteBlock'
-    return 解析响应体(向思源请求数据(
-        url = url,
-        data = {
-            id: id,
-        },
-    ))
+    let data = {
+        id: blockId,
+    }
+    return 解析响应体(向思源请求数据(url,data))
 }
